@@ -177,7 +177,7 @@ route.get("/shop-details", function (req, res) {
 });
 
 // get request for shopping-cart page
-route.get("/shopping-cart", function (req, res) {
+route.get("/shopping-carts", function (req, res) {
   res.render("shopping-cart");
 });
 
