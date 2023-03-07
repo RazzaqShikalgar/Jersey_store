@@ -80,13 +80,53 @@ form {
 	height: 100%;
 	text-align: center;
 }
+.form-control{
+	/* margin-bottom:10px; */
+	/* padding-bottom: 20px; */
+	width:100%;
+	position: relative;
+}
+.form-control i{
+	position: absolute;
+	top:30px;
+	right:20px;
+	visibility:hidden;
+}
+.form-control.success i.fa-circle-check{
+	visibility: visible;
+	color: #2ecc71;
+}
+.form-control.error i.fa-circle-exclamation{
+	visibility: visible;
+	color:#e74c3c;
+}
+.form-control small{
+	visibility:hidden;
+	position:absolute;
+	bottom:-10px;
+	left:0px;
+}
+
 
 input {
 	background-color: #eee;
-	border: none;
+	border:white solid 2px;
+	outline: none;
 	padding: 12px 15px;
 	margin: 8px 0;
+	margin-bottom: 15px;
+	position: relative;
 	width: 100%;
+}
+.form-control.success input{
+	border-color:#13aa52;
+}
+.form-control.error input{
+	border-color:#e74c3c;
+}
+.form-control.error small{
+	visibility: visible;
+	color:#e74c3c;
 }
 
 .container {
@@ -97,9 +137,9 @@ input {
 			0 10px 10px rgba(0,0,0,0.22);
 	position: relative;
 	overflow: hidden;
-	width: 768px;
+	width: 880px;
 	max-width: 100%;
-	min-height: 680px;
+	min-height: 700px;
 }
 
 .form-container {
@@ -232,3 +272,53 @@ input {
 		flex-direction: column;
 	}
 }
+
+
+
+/* 
+form {
+
+	> div {
+	  
+	  > input[type="text"],
+	  > input[type="email"],
+	  > input[type="password"] {
+	   
+		// When input is...
+		//   1. NOT empty
+		//   2. NOT in focus
+		//   3. NOT valid
+		&:invalid:not(:focus):not(:placeholder-shown) {
+		  // Show a light reminder
+		  background: pink;
+		  & + label {
+			opacity: 0;
+		  }
+		}
+		
+		// When that invalid input becomes in focus (and also still isn't empty)
+		&:invalid:focus:not(:placeholder-shown) {
+		  // Show the more robust requirement instructions below.
+		  & ~ .requirements {
+			max-height: 200px;
+			padding: 0 30px 20px 50px;
+		  }
+		}
+		
+	  }
+	  
+	  // <input> ~
+	  // <label> ~ 
+	  // <div class="requirements">
+	  .requirements {
+		padding: 0 30px 0 50px;
+		color: #999;
+		max-height: 0;
+		transition: 0.28s;
+		overflow: hidden;
+		color: red;
+		font-style: italic;
+	  }
+  
+	}
+  } */

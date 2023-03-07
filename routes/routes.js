@@ -28,11 +28,11 @@ route.get("/login", function (req, res) {
 // post request and logic for signup page
 route.post("/signup", async (req, res) => {
   // Checking that user filled in all fields
-  const { name, email, phone, password, cpassword } = req.body;
+  const { namee, email, phone, password, cpassword } = req.body;
   const symbol = "@+-/*#$%^&*()_";
   const num = "0123456789";
 
-  if (!name || !email || !phone || !password || !cpassword) {
+  if (!namee || !email || !phone || !password || !cpassword) {
     return res.render("signin", { message: "Please fill in all fields" });
   } else if (phone.length !== 10) {
     return res.render("signin", {
@@ -59,7 +59,7 @@ route.post("/signup", async (req, res) => {
         return res.render("signin", { message: "Mail already registred" });
       }
       // At the end creating a new user
-      const newUser = new User({ name, email, phone, password, cpassword });
+      const newUser = new User({ namee, email, phone, password, cpassword });
       const createUser = await newUser.save();
       if (createUser) {
         return res.render("signin", { message: "Registred Sucessfully!!!" });
