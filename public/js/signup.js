@@ -42,8 +42,6 @@ function setErrorFor(input, imessage) {
     let formControl = input.parentElement;
     formControl.className = "form-control success";
   }
-  
-
 
 const signUpButton = document.getElementById("signUp");
 const signInButton = document.getElementById("signIn");

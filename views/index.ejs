@@ -40,13 +40,100 @@
 </head>
 
 <body>
-
+    <% if(message != '') { %> 
+        <% if(message == 'Logged in Successfully') { %>
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+          <div><i class="bi bi-check"></i><%=message%></div>
+        </div>
+    <%}%>
+    <%}%>
 
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
     </div>
-   <%-include("partials/header");-%>
+  <!-- Offcanvas Menu Begin -->
+  <div class="offcanvas-menu-overlay"></div>
+  <div class="offcanvas-menu-wrapper">
+      <div class="offcanvas__option">
+          <div class="offcanvas__links">
+              <a href="/signin">Sign in</a>
+              <a href="#">FAQs</a>
+          </div>
+      </div>
+      <div id="mobile-menu-wrap"></div>
+      <div class="offcanvas__text">
+          <p>Free shipping, 30-day return or refund guarantee.</p>
+      </div>
+  </div>
+  <!-- Offcanvas Menu End -->
+
+  <!-- Header Section Begin -->
+  <header class="header">
+      <div class="header__top">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-6 col-md-7">
+                      <div class="header__top__left">
+                          <p>Free shipping, 30-day return or refund guarantee.</p>
+                      </div>
+                  </div>
+                  <div class="col-lg-6 col-md-5">
+                      <div class="header__top__right">
+                          <div class="header__top__links">
+                              <a href="">kjabb</a>
+                              <a href="/signin">Sign in</a>
+                              <a href="#">FAQs</a>
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-3 col-md-3">
+                  <div class="header__logo">
+                      <a href="/"><img src="img/logo/logo1.png" alt=""></a>
+                  </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                  <nav class="header__menu mobile-menu">
+                      <ul>
+                          <li class="active"><a href="/">Home</a></li>
+                          <li><a href="/shop">Shop</a></li>
+                          <li><a href="#">Pages</a>
+                              <ul class="dropdown">
+                                  <li><a href="/about">About Us</a></li>
+                                  <li><a href="/shop-details">Shop Details</a></li>
+                                  <li><a href="/shopping-cart">Shopping Cart</a></li>
+                                  <li><a href="/checkout">Check Out</a></li>
+                              </ul>
+                          </li>
+                          <li><a href="/contact">Contacts</a></li>
+                         
+                      </ul>
+                  </nav>
+              </div>
+              <div class="col-lg-3 col-md-3">
+                  <div class="header__nav__option">
+                      <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+                      <a href="#"><img src="img/icon/heart.png" alt=""></a>
+                      <a href="/cart"><img src="img/icon/cart.png" alt="My Cart"> <span> 
+                        <% if (typeof cart !== "undefined") { %>
+                        <%= cart.length %>
+                        <% } else {%>
+                            0
+                        <% } %></span></a>
+                  </div>
+              </div>
+          </div>
+          <div class="canvas__open"><i class="fa fa-bars"></i></div>
+      </div>
+      <%- messages('my_message_template', locals) %>
+  </header>
+  <!-- Header Section End -->
     <!-- Hero Section Begin -->
     <section class="hero">
         <div class="hero__slider owl-carousel">
@@ -58,7 +145,7 @@
                                 <h6>Summer Collection</h6>
                                 <h2>Fall - Winter Collections 2030</h2>
                                 <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
+                                 commitment to exceptional quality.</p>
                                 <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -163,7 +250,8 @@
                         </div>
                         <div class="product__item__text">
                             <h6>Piqué Biker Jacket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <!-- <a href="#" class="add-cart">+ Add To Cart</a> -->
+                            <button>add to cart</button>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
@@ -196,7 +284,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>Piqué Biker Jacket</h6>
+                            <h6>Pique Biker Jacket</h6>
                             <a href="#" class="add-cart">+ Add To Cart</a>
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
@@ -240,7 +328,7 @@
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star-o"></i>
                             </div>
-                            <h5>₹43.48</h5>
+                            <h5>₹80,000</h5>
                             <div class="product__color__select">
                                 <label for="pc-7">
                                     <input type="radio" id="pc-7">

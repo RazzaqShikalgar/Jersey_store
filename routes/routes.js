@@ -5,28 +5,41 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const validator = require("email-validator");
 const jwt = require("jsonwebtoken");
-
+const passport = require("passport");
+const passportlocalmongoose = require("passport-local-mongoose");
+// const run = require('../app.js');
+// run();
 // Importing modles
 const Contact = require("../models/contact.js");
 const User = require("../models/signup.js");
 
 // Routes
 // get request for landing page
-route.get("/", function (req, res) {
-  res.render("index");
+route.get("/",check,function (req, res) {
+    res.render("index" , {message:'',name:''});
 });
 
 // get request for signup page
 route.get("/signin", function (req, res) {
-  res.render("signin", { message: "" });
+  res.render("signin", { message: "" ,name:''});
 });
 
 route.get("/login", function (req, res) {
   res.render("signin", { message: "" });
 });
 
+route.get("/secrets", function (req, res) {
+  if(req.isAuthenticated()) {
+  res.render("secrets");
+  } else {
+    res.redirect('/about');
+  }
+});
+
 // post request and logic for signup page
 route.post("/signup", async (req, res) => {
+  
+  const JWT_SECRET = "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu";
   // Checking that user filled in all fields
   const { namee, email, phone, password, cpassword } = req.body;
   const symbol = "@+-/*#$%^&*()_";
@@ -48,7 +61,7 @@ route.post("/signup", async (req, res) => {
         "Please enter a valid password with numeric characters and special characters",
     });
   } else if (password !== cpassword) {
-    return res.render("signin", { message: "Passwords do not match" });
+    return res.render("signin", { message: "Passwords do not match"});
   } else if (!validator.validate(email)) {
     return res.render("signin", { message: "Please enter a valid email" });
   } else {
@@ -59,10 +72,13 @@ route.post("/signup", async (req, res) => {
         return res.render("signin", { message: "Mail already registred" });
       }
       // At the end creating a new user
-      const newUser = new User({ namee, email, phone, password, cpassword });
+      const token = await jwt.sign({ email }, JWT_SECRET,{expiresIn : "2h"});
+      const newUser = new User({ namee, email, phone, password, cpassword,token});
+      console.log(token);
       const createUser = await newUser.save();
       if (createUser) {
-        return res.render("signin", { message: "Registred Sucessfully!!!" });
+          return res.render("signin", { message: "Registred Sucessfully!!!" });
+     
       }
     } catch (err) {
       console.log(err);
@@ -70,21 +86,58 @@ route.post("/signup", async (req, res) => {
   }
 });
 
+// route.get('/api',check,(req,res)=>{
+//   jwt.verify(req.token,'goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu',(err,data)=>{
+//     if(err){
+// res.json({err:err})
+//     }else{
+
+//       res.json({msg : 'protected',data : data})
+//     }
+//   })
+// })
+
+// Middleware function for checking the user is legit or not
+async function check (req,res,next){
+  const JWT_SECRET = "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu";
+    const token = req.cookies.jwtToken;
+    if (!token) {
+     return res.render('signin',{message:''});
+    }
+
+    const data = jwt.verify(token, JWT_SECRET);
+    email = data.email;
+    const user = await User.findOne({email});
+    // console.log(user);
+    next();
+}
+
 // Login Page
 route.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+ 
+  // The secret should be an unguessable long string (you can use a password generator for this!)
+const JWT_SECRET = "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu";
+  const { email, password,namee} = req.body;
   try {
     const Username = await User.findOne({ email: email });
+    // console.log(Username);
     if (!Username) {
       return res.render("signin", { message: "User not found" });
     } else {
       if (Username) {
         bcrypt.compare(password, Username.password, function (err, result) {
+          User.register({email: req.body.email, password: req.body.password});
           if (result == true) {
-            return res.render("signin", { message: "Login Successfully!!!" });
-          } else {
-            return res.render("signin", { message: "Password is incorrect" });
+            // passport.authenticate("local")(req,res,function(){
+                    // res.redirect("/secrets");
+                    // return res.render("signin", { message: "Registred Sucessfully!!!" });
+                  // });
+            // return res.render("index",{ message: "Logged in Successfully" ,name:Username.namee});
+            const token = jwt.sign({ email }, JWT_SECRET,{expiresIn:"2h"});
+            return res.cookie('jwtToken',token,{expires:new Date(Date.now() + 25892000000),httpOnly:true}).render("index",{ message: "Logged in Successfully" });
+  
           }
+       
         });
       } else {
         return res.render("signin", { message: "Something went Wrong" });
@@ -95,71 +148,6 @@ route.post("/login", async (req, res) => {
   }
 });
 
-//   {
-//     if(err){
-//       console.log(err);
-//     } else{
-//       if(foundUser){
-//        bcrypt.compare(password,foundUser.password,function(err,result){
-//         if(result==true) {
-//           return  res.render("register",{message:'Logged in successfully'});
-//         }
-//         else{
-//           return res.render("register",{message:'Something went wrong'});
-//         }
-//        });
-
-//       }
-//       else {
-//         return res.render("register",{message:'Something went wrong'});
-//       }
-//     }
-//   });
-// });
-
-// Post request and logic for login page
-// route.post('/login',async()=>{
-// try {
-//   const { email, password } = req.body;
-//   if (!email || !password) {
-//     return res.render('signin',{
-//       message: "Please fill in all fields",
-//     });
-//   }else{
-//     return res.render('signin',{
-//       message: "Login Sucessfully!!!",
-//     })
-//   }
-
-//   const userLogin = await User.findOne({ email });
-//   console.log(userLogin);
-// }catch (err) {
-//   console.log(err);
-// }
-//   //   if (userLogin) {
-//   //     const isMatch = await bcrypt.compare(password,userLogin.password);
-
-//   //     if (!isMatch) {
-//   //       return res.json({
-//   //         success: false,
-//   //         msg: "wrong",
-//   //       });
-//   //     } else {
-//   //       return res.json({
-//   //         success: true,
-//   //         msg: "login",
-//   //       });
-//   //     }
-//   //   } else {
-//   //     return res.json({
-//   //       success: false,
-//   //       msg: "wrong",
-//   //     });
-//   //   }
-//   // } catch (err) {
-//   //   console.log(err);
-//   // }
-// })
 
 // get request for shop page
 route.get("/shop", function (req, res) {
@@ -180,6 +168,9 @@ route.get("/shop-details", function (req, res) {
 route.get("/shopping-carts", function (req, res) {
   res.render("shopping-cart");
 });
+route.get("/cart", function (req, res) {
+  res.render("cart");
+});
 
 // get request for checkout page
 route.get("/checkout", function (req, res) {
@@ -190,6 +181,7 @@ route.get("/checkout", function (req, res) {
 route.get("/contact", function (req, res) {
   res.render("contact", { message: "" });
 });
+
 
 // post request for contact page
 route.post("/contact", async (req, res) => {
@@ -219,5 +211,9 @@ route.post("/contact", async (req, res) => {
 route.get("*", (req, res) => {
   res.render("404");
 });
+
+
+// -------------------------Add-to-Cart-------------------------------------------------------
+
 
 module.exports = route;
