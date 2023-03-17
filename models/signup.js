@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const passportlocalmongoose = require("passport-local-mongoose");
+// const passportlocalmongoose = require("passport-local-mongoose");
 
 const userSchema =  new mongoose.Schema({
     namee      : { type:String , required:true },
@@ -25,6 +25,6 @@ userSchema.pre("save",async function(next){
     next();
 });
 
-userSchema.plugin(passportlocalmongoose);
+// userSchema.plugin(passportlocalmongoose);
 
 module.exports = mongoose.model('User', userSchema);

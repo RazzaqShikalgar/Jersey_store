@@ -36,7 +36,9 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                          
+                                <% if(message != ''){ %>
+                                <a href=""><%=name%></a>
+                                <% } %>
                                 <a href="/signin">Sign in</a>
                                 <a href="#">FAQs</a>
                             </div>

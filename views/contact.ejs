@@ -39,6 +39,20 @@
   </head>
 
   <body>
+
+    
+    <!-- Logic for message  -->
+    <% if(message != '') { %>
+      <% if(message == 'Please fill in all fields'){ %>
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+          <div><i class="bi bi-x-circle"></i><strong><%= name %></strong> <%= message %></div>
+        </div>
+        <% } else{%>
+          <div class="alert alert-success d-flex align-items-center" role="alert">
+            <div><i class="bi bi-check"></i><strong><%= name %></strong> <%= message %></div>
+          </div>
+          <% } %>
+    <% } %>
     <!-- Page Preloder -->
     <div id="preloder">
       <div class="loader"></div>
@@ -89,6 +103,7 @@
             <div class="col-lg-6 col-md-5">
               <div class="header__top__right">
                 <div class="header__top__links">
+                  <a href=""><%=name %></a>
                   <a href="#">Sign in</a>
                   <a href="#">FAQs</a>
                 </div>
@@ -107,8 +122,8 @@
         <div class="row">
           <div class="col-lg-3 col-md-3">
             <div class="header__logo">
-              <a href="/"><img src="img/logo.png" alt="" /></a>
-            </div>
+              <a href="/"><img src="img/logo/logo1.png" alt=""></a>
+          </div>
           </div>
           <div class="col-lg-6 col-md-6">
             <nav class="header__menu mobile-menu">
@@ -144,19 +159,6 @@
       </div>
     </header>
     <!-- Header Section End -->
-
-    <!-- Logic for message  -->
-    <% if(message != '') { %>
-      <% if(message == 'Please fill in all fields'){ %>
-        <div class="alert alert-danger d-flex align-items-center" role="alert">
-          <div><i class="bi bi-x-circle"></i><strong><%= name %></strong> <%= message %></div>
-        </div>
-        <% } else{%>
-          <div class="alert alert-success d-flex align-items-center" role="alert">
-            <div><i class="bi bi-check"></i><strong><%= name %></strong> <%= message %></div>
-          </div>
-          <% } %>
-    <% } %>
 
     <!-- Map Begin -->
     <div class="map">
