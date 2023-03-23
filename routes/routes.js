@@ -32,6 +32,18 @@ var upload = multer({
       })
 }).single("image")
 
+route.post('/',async(req,res)=>{
+  const search = req.body.search;
+  console.log(search);
+ try{
+  const a = await Product.find({productname : search});
+  console.log(a);
+  res.redirect('/');
+ }catch(err) {
+  console.log(err);
+ }
+})
+
 route.get("/",check, async(req, res)=>{
 try{
   const products = await Product.find({}).limit(100)
@@ -147,7 +159,7 @@ route.post("/login", async (req, res) => {
           if (result == true) {
             const token = jwt.sign({ email },JWT_SECRET,{expiresIn:"2h"});
             
-            return res.cookie('jwtToken',token,{expires:new Date(Date.now() + 25892000000),httpOnly:true}).render("index",{ message: "Logged in Successfully",name:'',products:'' });
+            return res.cookie('jwtToken',token,{expires:new Date(Date.now() + 25892000000),httpOnly:true}).redirect("/");
   
           }
        
@@ -163,8 +175,9 @@ route.post("/login", async (req, res) => {
 
 
 // get request for shop page
-route.get("/shop", function (req, res) {
-  res.render("shop",{message:''});
+route.get("/shop",async(req, res)=>{
+  const products = await Product.find({}).limit(100)
+  res.render("shop",{message:'',products:products});
 });
 
 // get request for about page
@@ -270,7 +283,7 @@ route.get('/delete/:id',async (req,res)=>{
      if(!_id){
         return res.status(400).send('not found');
      }else{
-    return  res.render('pages/form',{message:'Deleted Successfully'});
+    return  res.redirect('/showproducts');
      }
   } catch (error) {
      res.send(error)

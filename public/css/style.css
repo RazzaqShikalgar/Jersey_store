@@ -599,7 +599,7 @@ ol {
 }
 
 .hero__text h2 {
-	color: #111111;
+	color: white;
 	font-size: 48px;
 	font-weight: 700;
 	line-height: 58px;
@@ -641,12 +641,12 @@ ol {
 }
 
 .hero__social {
-	margin-top: 190px;
+	margin-top: 170px;
 }
 
 .hero__social a {
-	font-size: 16px;
-	color: #3d3d3d;
+	font-size: 26px;
+	color: white;
 	display: inline-block;
 	margin-right: 32px;
 }
@@ -4063,9 +4063,28 @@ ol {
 	background: #69a6ce;
 	color: #fff;
 }
+
 .card-title {
-    float: left;
-    font-size: 10.1rem;
-    font-weight: 400;
-    margin: 0;
+	float: left;
+	font-size: 10.1rem;
+	font-weight: 400;
+	margin: 0;
 }
+
+
+
+
+
+
+
+
+.textdes {
+	text-align: end;
+}
+
+
+.navbar-inner{
+	background-color: rgba(0,0,0,.5);
+}
+
+

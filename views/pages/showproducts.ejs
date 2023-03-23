@@ -91,8 +91,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="card mb-2 bg-gradient-dark">
                   <img class="card-img-top" src="/uploads/<%=Product.image%>" alt="<%=Product.productname%>">
                   <div class="card-img-overlay d-flex flex-column justify-content-end">
-                    <h5 class="card-title align-content-center text-primary text-dark scroll"><%=Product.productname%></h5>
+                    <div class="textdes">
+                    <h5 class="card-title align-items-end text-primary text-dark scroll"><%=Product.productname%></h5>
                     <p class="card-text text-dark pb-2 pt-1"><%=Product.productdescription%></p>
+                </div>
                     <a href="/delete/<%=Product.id%>" class="btn mb-0 btn-group-sm btn-primary">Delete</a>
                     <a href="/edit/<%=Product.id%>" class="btn mb-0 btn-group-sm btn-primary">Edit</a>
                     <!-- <button type="button" class="btn btn-primary btn-sm">Delete</button> -->
