@@ -114,10 +114,11 @@
             <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
           </div>
           <span>or use your account</span>
-          <input name="email" type="email" placeholder="Email" />
-          <input name="password" type="password" placeholder="Password" />
+          <input id="loginEmail" name="email" type="email" placeholder="Email" />
+          <input id="loginPassword" name="password" type="password" placeholder="Password" />
           <a href="#">Forgot your password?</a>
-          <button>Sign In</button>
+          <button onclick="">Sign In</button>
+          <!-- <button onclick="handleLoginSubmit()">Sign In</button> -->
         </form>
       </div>
 
@@ -147,5 +148,26 @@
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 
     <script src="js/signup.js"></script>
+    <script>
+      const handleLoginSubmit = async () => {
+    // if(password!==confirmPassword) return;
+const API = `http://localhost:8080`
+    const email = document.getElementById('loginEmail').value;
+    const user = {email};
+    const res = await fetch(`${API}/generate-otp`, {Method: 'POST',Headers: {Accept: 'application.json','Content-Type': 'application/json'
+  },
+  Body: user,
+  Cache: 'default'}
+,user).then(
+  (res)=>{
+    console.log(res)
+  }
+).then(()=>{
+  window.location.replace(`${API}/otp`)
+})
+    // windows.('/otp');
+  }
+    </script>
+
   </body>
 </html>

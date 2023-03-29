@@ -1,22 +1,13 @@
-// Requiring dependencies
-// const fileUpload = require("express-fileupload");
-// const fileRoutes =  require("./routes/files-upload-routes");
-// const passport = require("passport");
-// const passportlocalmongoose = require("passport-local-mongoose");
-// const cors = require("cors");
-// const admin_router = require("./routes/admin_route.js");
-// const path = require("path");
+
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
 const session = require("express-session");
 const User = require("./models/signup");
 const expressValidator = require("express-validator");
 const routes = require("./routes/routes.js");
 const cookieParser = require("cookie-parser");
-require("dotenv").config();
-var GoogleStrategy = require("passport-google-oauth20").Strategy;
+const flash = require("express-flash");
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -47,9 +38,11 @@ app.use(
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true },
+    cookie: { maxAge: 1000 * 60 * 60 * 24,secure: true },
   })
 );
+
+app.use(flash())
 // app.use(passport.initialize());
 // app.use(passport.session());
 // passport.use(User.createStrategy());
@@ -57,8 +50,7 @@ app.use(
 // passport.serializeUser(User.serializeUser());
 // passport.deserializeUser(User.deserializeUser());
 
-app.use(
-  expressValidator({
+app.use(expressValidator({
     errorFormatter: function (param, msg, value) {
       var namespace = param.split("."),
         root = namespace.shift(),

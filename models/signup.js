@@ -8,12 +8,19 @@ const userSchema =  new mongoose.Schema({
     email     : { type:String , required:true },
     
     phone     : { type:Number , required:true },
+
  
     password  : { type:String , required:true },
 
     cpassword : { type:String , required:true },
 
     token: { type: String },
+
+    cart : {
+      type : Array,
+      default : [],
+    },
+    wishlist:[{type:mongoose.Schema.Types.ObjectId,ref:"Product"}],
 });
 
 // Hashing the password before saving it to the database

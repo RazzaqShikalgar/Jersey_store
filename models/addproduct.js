@@ -6,7 +6,12 @@ const ProductSchema =  new mongoose.Schema({
     
     productdescription : { type:String , required:true },
     
-      prices: { type:String , required:true }
+      prices: { type:String , required:true },
+      
+      cart:{
+        type:Array,
+        default:[],
+      }
 
     //   image : { data:buffer}
 

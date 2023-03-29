@@ -1049,7 +1049,7 @@ ol {
 	position: relative;
 }
 
-.product__item__text a {
+.product__item__text .add-cart {
 	font-size: 15px;
 	color: #e53637;
 	font-weight: 700;
@@ -1058,10 +1058,24 @@ ol {
 	top: 0;
 	opacity: 0;
 	visibility: hidden;
+	cursor:pointer;
 	-webkit-transition: all, 0.3s;
 	-o-transition: all, 0.3s;
 	transition: all, 0.3s;
 }
+.viewpro{
+	
+	color:black;
+	font-size:20px;
+	font-family:sans-serif;
+	font-weight:54;
+}
+.viewpro:hover{
+	cursor:pointer;
+	color:black;
+}
+
+
 
 .product__item__text h6 {
 	color: #111111;
@@ -1946,6 +1960,7 @@ ol {
 
 .footer__about .footer__logo a {
 	display: inline-block;
+	color:whitesmoke;
 }
 
 .footer__about p {
@@ -4083,8 +4098,8 @@ ol {
 }
 
 
-.navbar-inner{
+/* .navbar-inner{
 	background-color: rgba(0,0,0,.5);
-}
+} */
 
 
